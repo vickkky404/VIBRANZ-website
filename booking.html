@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIBRANZ | Booking Details</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Razorpay -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0a0a0a',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            cyan: '#06b6d4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Syncopate', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'neon-gradient': 'linear-gradient(to right, #8b5cf6, #ec4899)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Enhanced Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 1), rgba(15, 15, 15, 1));
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #8b5cf6, #ec4899);
+            border-radius: 6px;
+            border: 2px solid rgba(10, 10, 10, 0.5);
+            transition: all 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ec4899, #06b6d4);
+            box-shadow: 0 0 12px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Refined Glass-morphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.1);
+        }
+
+        /* Enhanced Text Glow */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.3);
+            letter-spacing: 0.02em;
+        }
+
+        /* Smooth Input Focus */
+        input:focus, textarea:focus, select:focus {
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1), 0 0 12px rgba(139, 92, 246, 0.3) !important;
+            border-color: #8b5cf6 !important;
+        }
+
+        /* Enhanced Button Styles */
+        button {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Hover Lift Effect */
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form Input Base */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Staggered animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        .animate-slide-in:nth-child(1) { animation-delay: 0.1s; }
+        .animate-slide-in:nth-child(2) { animation-delay: 0.2s; }
+        .animate-slide-in:nth-child(3) { animation-delay: 0.3s; }
+        .animate-slide-in:nth-child(4) { animation-delay: 0.4s; }
+        .animate-slide-in:nth-child(5) { animation-delay: 0.5s; }
+        .animate-slide-in:nth-child(6) { animation-delay: 0.6s; }
+        .animate-slide-in:nth-child(7) { animation-delay: 0.7s; }
+        .animate-slide-in:nth-child(8) { animation-delay: 0.8s; }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            accent-color: #8b5cf6;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-white font-sans overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-brand-dark/90 backdrop-blur-md shadow-lg" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-display font-bold tracking-widest text-transparent bg-clip-text bg-neon-gradient">VIBRANZ</a>
+            <a href="index.html" class="text-gray-300 hover:text-brand-pink transition-colors">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="min-h-screen pt-24 pb-12 px-4">
+        <div class="container mx-auto max-w-2xl">
+            
+            <!-- Header -->
+            <div class="text-center mb-12 animate-slide-in opacity-0">
+                <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 text-glow">Complete Your Booking</h1>
+                <p class="text-gray-400 text-lg">Enter your details to proceed with payment</p>
+            </div>
+
+            <!-- Ticket Summary -->
+            <div class="glass-card p-6 rounded-2xl mb-8 animate-slide-in opacity-0" style="animation-delay: 0.15s;">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm uppercase tracking-wider mb-1">Selected Pass</p>
+                        <h2 class="text-2xl font-bold" id="ticketNameDisplay">Loading...</h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-gray-400 text-sm uppercase tracking-wider mb-1">Amount</p>
+                        <h2 class="text-3xl font-display font-bold text-brand-cyan">₹<span id="amountDisplay">0</span></h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <form id="bookingForm" class="glass-card p-8 rounded-2xl space-y-6">
+                
+                <!-- Full Name -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.2s;">
+                    <label for="fullName" class="block text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">Full Name <span class="text-brand-pink">*</span></label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-600 focus:outline-none">
+                </div>
+
+                <!-- Email -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.3s;">
+                    <label for="email" class="block text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">Email Address <span class="text-brand-pink">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-600 focus:outline-none">
+                </div>
+
+                <!-- Phone Number -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.4s;">
+                    <label for="phone" class="block text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">Phone Number <span class="text-brand-pink">*</span></label>
+                    <input type="tel" id="phone" name="phone" required placeholder="10-digit mobile number" pattern="[0-9]{10}" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-600 focus:outline-none">
+                    <p class="text-xs text-gray-500 mt-1">Enter 10-digit phone number</p>
+                </div>
+
+                <!-- College/Organization -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.5s;">
+                    <label for="college" class="block text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">College / Organization <span class="text-brand-pink">*</span></label>
+                    <input type="text" id="college" name="college" required placeholder="Your college or organization name" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-600 focus:outline-none">
+                </div>
+
+                <!-- ID Type -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.6s;">
+                    <label for="idType" class="block text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">ID Type <span class="text-brand-pink">*</span></label>
+                    <select id="idType" name="idType" required class="form-input w-full px-4 py-3 rounded-lg text-white focus:outline-none">
+                        <option value="">Select ID Type</option>
+                        <option value="college_id">College ID</option>
+                        <option value="aadhar">Aadhar Card</option>
+                        <option value="pan">PAN Card</option>
+                        <option value="passport">Passport</option>
+                        <option value="driving_license">Driving License</option>
+                    </select>
+                </div>
+
+                <!-- ID Number -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.7s;">
+                    <label for="idNumber" class="block text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">ID Number <span class="text-brand-pink">*</span></label>
+                    <input type="text" id="idNumber" name="idNumber" required placeholder="Enter your ID number" class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-gray-600 focus:outline-none">
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="animate-slide-in opacity-0" style="animation-delay: 0.8s;">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="termsAccepted" name="termsAccepted" required class="mt-1">
+                        <span class="text-sm text-gray-400">
+                            I agree to the <a href="#" class="text-brand-cyan hover:text-brand-pink transition-colors">terms and conditions</a> and <a href="#" class="text-brand-cyan hover:text-brand-pink transition-colors">privacy policy</a> of VIBRANZ 2025
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-4 bg-neon-gradient rounded-full font-bold uppercase tracking-wider hover:opacity-90 transition-opacity mt-8 hover-lift animate-slide-in opacity-0" style="animation-delay: 0.9s;">
+                    <i class="fas fa-lock mr-2"></i> Proceed to Payment
+                </button>
+
+                <!-- Back Link -->
+                <div class="text-center">
+                    <a href="index.html" class="text-gray-400 hover:text-brand-cyan transition-colors text-sm">Cancel and go back</a>
+                </div>
+            </form>
+
+            <!-- Info Box -->
+            <div class="glass-card p-6 rounded-2xl mt-8 border border-brand-cyan/30 animate-slide-in opacity-0" style="animation-delay: 1s;">
+                <div class="flex gap-4">
+                    <i class="fas fa-info-circle text-brand-cyan text-xl flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold mb-2 text-brand-cyan">Secure Booking</h3>
+                        <p class="text-sm text-gray-400">Your payment is secured with Razorpay's industry-leading encryption. We do not store your card details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Get ticket details from URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const ticketType = params.get('type') || 'student';
+        const amount = parseInt(params.get('amount')) || 299;
+        const ticketName = params.get('name') || 'CENTURION STUDENT';
+
+        // Display ticket info
+        document.getElementById('ticketNameDisplay').textContent = ticketName;
+        document.getElementById('amountDisplay').textContent = amount;
+
+        // Store ticket data
+        const ticketData = {
+            type: ticketType,
+            amount: amount,
+            name: ticketName
+        };
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                college: document.getElementById('college').value,
+                idType: document.getElementById('idType').value,
+                idNumber: document.getElementById('idNumber').value,
+            };
+
+            // Validate form
+            if (!formData.fullName || !formData.email || !formData.phone || !formData.college || !formData.idType || !formData.idNumber) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            // Validate phone number
+            if (!/^\d{10}$/.test(formData.phone)) {
+                alert('Please enter a valid 10-digit phone number');
+                return;
+            }
+
+            // Validate email
+            if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            // Disable button and show processing
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            submitBtn.disabled = true;
+
+            // Proceed to payment
+            setTimeout(() => {
+                initiatePayment(formData);
+            }, 500);
+        });
+
+        // Razorpay Payment Key (Replace with your actual key)
+        const RAZORPAY_KEY_ID = "YOUR_RAZORPAY_KEY_ID";
+
+        function initiatePayment(formData) {
+            const amountInPaisa = ticketData.amount * 100;
+            const orderId = "order_" + Date.now();
+
+            const options = {
+                key: RAZORPAY_KEY_ID,
+                amount: amountInPaisa,
+                currency: "INR",
+                name: "VIBRANZ 2025",
+                description: ticketData.name + " - Vibranz Festival Pass",
+                order_id: orderId,
+                image: "https://via.placeholder.com/200x200?text=VIBRANZ",
+                prefill: {
+                    name: formData.fullName,
+                    email: formData.email,
+                    contact: formData.phone,
+                },
+                notes: {
+                    ticket_type: ticketData.type,
+                    ticket_name: ticketData.name,
+                    college: formData.college,
+                    id_type: formData.idType,
+                },
+                theme: {
+                    color: "#8b5cf6",
+                },
+                handler: function (response) {
+                    verifyPayment(response, formData);
+                },
+                modal: {
+                    ondismiss: function () {
+                        const submitBtn = document.querySelector('button[type="submit"]');
+                        submitBtn.innerHTML = '<i class="fas fa-lock mr-2"></i> Proceed to Payment';
+                        submitBtn.disabled = false;
+                        alert("Payment cancelled. Please try again.");
+                    },
+                },
+            };
+
+            const rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+
+        async function verifyPayment(response, formData) {
+            try {
+                console.log("Payment verified:", response);
+
+                // Here you would typically send verification data to your backend
+                // await fetch('/api/verify-payment', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({
+                //         paymentId: response.razorpay_payment_id,
+                //         orderId: response.razorpay_order_id,
+                //         signature: response.razorpay_signature,
+                //         ticketData: ticketData,
+                //         formData: formData,
+                //     })
+                // });
+
+                showSuccessModal(formData);
+            } catch (error) {
+                console.error("Payment verification failed:", error);
+                alert("Payment verification failed. Please contact support.");
+            }
+        }
+
+        function showSuccessModal(formData) {
+            const successModal = document.createElement('div');
+            successModal.className = 'fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50';
+            successModal.innerHTML = `
+                <div class="bg-brand-dark border border-brand-cyan/50 rounded-3xl p-8 max-w-md w-full mx-4 text-center animate-slide-in opacity-0" style="animation: slideIn 0.6s ease-out forwards;">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check text-3xl text-green-500"></i>
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-white">Payment Successful!</h2>
+                    </div>
+                    <div class="space-y-3 mb-6 text-left bg-white/5 p-4 rounded-lg">
+                        <div class="flex justify-between text-gray-300">
+                            <span>Ticket:</span>
+                            <strong>${ticketData.name}</strong>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Attendee:</span>
+                            <strong>${formData.fullName}</strong>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Amount Paid:</span>
+                            <strong class="text-brand-cyan">₹${ticketData.amount}</strong>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">A confirmation email with your ticket details and QR code has been sent to <strong>${formData.email}</strong></p>
+                    <a href="index.html" class="block w-full py-3 bg-neon-gradient rounded-full font-bold uppercase text-sm tracking-wider hover:opacity-90 transition-opacity text-center">
+                        Back to Home
+                    </a>
+                </div>
+            `;
+            document.body.appendChild(successModal);
+        }
+    </script>
+</body>
+</html>
